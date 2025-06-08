@@ -1,9 +1,10 @@
-# CTF writeups
+# CTF readmes
 
 DO NOT EDIT THIS MANUALLY, run: `make readme`
 
-- [cryptopals](cryptopals/writeup.md)
-- [in.security](in.security/writeup.md)
-- [overthewire/bandit](overthewire/bandit/writeup.md)
-- [overthewire/natas](overthewire/natas/writeup.md)
-- [pwnable.kr](pwnable.kr/writeup.md)
+- [crypto-attacks](crypto-attacks/readme.md)
+- [cryptopals](cryptopals/readme.md)
+- [in.security](in.security/readme.md)
+- [overthewire/bandit](overthewire/bandit/readme.md)
+- [overthewire/natas](overthewire/natas/readme.md)
+- [pwnable.kr](pwnable.kr/readme.md)

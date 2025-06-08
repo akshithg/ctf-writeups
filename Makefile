@@ -6,4 +6,4 @@ clean:
 	rm -f readme.md
 
 readme.md:
-	./writeup.py
+	./make-readme.py
