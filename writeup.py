@@ -1,25 +1,43 @@
 #!/usr/bin/env python3
 """
-genarates the readme.md
+Generates the readme.md file from CTF writeups.
 """
 
-import os
-
-readme = './readme.md'
-html = './index.html'
-path = './'
-files = []
-
-for r, d, f in os.walk(path):
-    for file in f:
-        if 'writeup.md' in file:
-            files.append(os.path.join(r, file))
+from pathlib import Path
+from typing import List
 
 
-with open(readme, 'w') as f:
-    print('# CTF writeups\n', file=f)
-    print('DO NOT EDIT THIS MANUALLY, run: `make readme`\n', file=f)
+def find_writeup_files(search_path: Path = Path('.')) -> List[Path]:
+    """Find all writeup.md files in the directory tree."""
+    return list(search_path.rglob('writeup.md'))
 
 
-    for x in files:
-        print('- [{}]({})'.format( ' | '.join(x.split('/')[1:-1]), x), file=f)
+def format_writeup_entry(writeup_path: Path) -> str:
+    """Format a writeup path into a markdown link."""
+    # ./ctf/subdir/writeup.md -> - [ctf/subdir](./ctf/subdir/writeup.md)
+    name = writeup_path.parent
+    return f"- [{name}]({writeup_path})"
+
+def generate_readme(output_path: Path = Path('readme.md')) -> None:
+    """Generate the README.md file from found writeups."""
+    writeup_files = find_writeup_files()
+
+    # Sort files for consistent output
+    writeup_files.sort()
+
+    with output_path.open('w', encoding='utf-8') as f:
+        f.write('# CTF writeups\n\n')
+        f.write('DO NOT EDIT THIS MANUALLY, run: `make readme`\n\n')
+
+        if not writeup_files:
+            f.write('No writeups found.\n')
+            return
+
+        for writeup_file in writeup_files:
+            f.write(format_writeup_entry(writeup_file) + '\n')
+
+    print(f"Generated {output_path} with {len(writeup_files)} writeups")
+
+
+if __name__ == '__main__':
+    generate_readme()
